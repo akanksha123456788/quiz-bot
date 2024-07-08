@@ -10,6 +10,12 @@ def generate_bot_responses(message, session):
         bot_responses.append(BOT_WELCOME_MESSAGE)
 
     success, error = record_current_answer(message, current_question_id, session)
+    try: 
+        session.record_answer(question_id=current_question_id, answer=message)
+        return True, None
+    except Exception as e: 
+        return False, str(e)
+    
 
     if not success:
         return [error]
